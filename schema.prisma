@@ -1,0 +1,87 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id          String @id @default(cuid())
+  name        String
+  slug        String @unique
+  description String
+  color       String
+  icon        String
+  order       Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  articles          Article[]
+  timelineEvents    TimelineEvent[]
+  evidenceDocuments EvidenceDocument[]
+
+  @@map("categories")
+}
+
+model Article {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  content     String
+  excerpt     String
+  category    String
+  tags        String   // JSON string array
+  publishedAt DateTime
+  updatedAt   DateTime @updatedAt
+  featured    Boolean  @default(false)
+  readTime    Int      // in minutes
+
+  // Relations
+  categoryRef Category @relation(fields: [category], references: [slug])
+
+  @@map("articles")
+}
+
+model TimelineEvent {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  date        DateTime
+  category    String
+  importance  Int      // 1-5 scale
+  sources     String   // JSON string array
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  categoryRef Category @relation(fields: [category], references: [slug])
+
+  @@map("timeline_events")
+}
+
+model EvidenceDocument {
+  id                 String   @id @default(cuid())
+  title              String
+  description        String
+  documentType       String   // report, document, testimony, media, other
+  source             String
+  sourceUrl          String?
+  verificationStatus String   // verified, pending, disputed
+  tags               String   // JSON string array
+  content            String
+  publishedAt        DateTime
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  category           String
+
+  // Relations
+  categoryRef Category @relation(fields: [category], references: [slug])
+
+  @@map("evidence_documents")
+}

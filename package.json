@@ -1,0 +1,20 @@
+{
+  "name": "olive-branch",
+  "version": "1.0.0",
+  "description": "A censorship-resistant Progressive Web App for educational content",
+  "private": true,
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "type-check": "turbo type-check",
+    "clean": "turbo clean"
+  },
+  "devDependencies": {
+    "turbo": "^2.5.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "packageManager": "pnpm@9.14.1"
+}

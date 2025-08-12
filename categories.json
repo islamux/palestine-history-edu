@@ -1,0 +1,57 @@
+[
+  {
+    "id": "history",
+    "name": "History",
+    "slug": "history",
+    "description": "Historical background and context of Palestine",
+    "color": "#8B5A3C",
+    "icon": "BookOpen",
+    "order": 1
+  },
+  {
+    "id": "timeline",
+    "name": "Timeline",
+    "slug": "timeline",
+    "description": "Chronological events and milestones",
+    "color": "#2563EB",
+    "icon": "Clock",
+    "order": 2
+  },
+  {
+    "id": "evidence",
+    "name": "Evidence",
+    "slug": "evidence",
+    "description": "Documented reports and testimonies",
+    "color": "#DC2626",
+    "icon": "FileText",
+    "order": 3
+  },
+  {
+    "id": "culture",
+    "name": "Culture",
+    "slug": "culture",
+    "description": "Cultural heritage and traditions",
+    "color": "#059669",
+    "icon": "Heart",
+    "order": 4
+  },
+  {
+    "id": "current-events",
+    "name": "Current Events",
+    "slug": "current-events",
+    "description": "Recent developments and news",
+    "color": "#7C3AED",
+    "icon": "Globe",
+    "order": 5
+  },
+  {
+    "id": "resources",
+    "name": "Resources",
+    "slug": "resources",
+    "description": "Educational materials and references",
+    "color": "#EA580C",
+    "icon": "Library",
+    "order": 6
+  }
+]
+
