@@ -43,6 +43,7 @@ export function loadArticlesFromFiles(): Article[] {
         id: frontMatter.id || file.replace('.md', ''),
         title: frontMatter.title,
         slug: frontMatter.slug || file.replace('.md', ''),
+        date: frontMatter.date,
         content,
         excerpt: frontMatter.excerpt,
         category: frontMatter.category,

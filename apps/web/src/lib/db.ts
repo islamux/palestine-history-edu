@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@olive-branch/db';
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;

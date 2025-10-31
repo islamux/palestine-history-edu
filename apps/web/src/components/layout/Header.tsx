@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/Button';
+import { cn } from '@olive-branch/ui';
+import { Button } from '@olive-branch/ui';
 import { Menu, X, Search, Moon, Sun } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -144,4 +144,3 @@ export function Header() {
     </header>
   );
 }
-

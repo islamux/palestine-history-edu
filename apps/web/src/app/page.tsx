@@ -2,9 +2,9 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Button } from '@/components/ui/Button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
-import { Badge } from '@/components/ui/Badge'
+import { Button } from '@olive-branch/ui'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@olive-branch/ui'
+import { Badge } from '@olive-branch/ui'
 import { BookOpen, Clock, FileText, Heart, Globe, Users, Menu, X, Search, Moon, Sun } from 'lucide-react'
 
 export default function HomePage() {

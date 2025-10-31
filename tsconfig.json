@@ -1,0 +1,9 @@
+{
+  "extends": "./packages/config/base.json",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./apps/web/src/*"],
+      "@/types": ["./apps/web/src/types"]
+    }
+  }
+}
