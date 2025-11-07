@@ -5,17 +5,14 @@ import Link from 'next/link'
 import { Button } from '@olive-branch/ui'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@olive-branch/ui'
 import { Badge } from '@olive-branch/ui'
+import { useDarkMode } from '@/hooks/useDarkMode'
 import { BookOpen, Clock, FileText, Heart, Globe, Users, Menu, X, Search, Moon, Sun } from 'lucide-react'
 
 export default function HomePage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isDarkMode, setIsDarkMode] = useState(false)
+  const [isDarkMode, toggleDarkMode] = useDarkMode()
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode)
-    document.documentElement.classList.toggle('dark')
-  }
 
   const navigationItems = [
     { label: 'الرئيسية', href: '/', description: 'الصفحة الرئيسية' },
@@ -58,7 +55,12 @@ export default function HomePage() {
               <Search className="h-4 w-4" />
             </Button>
             
-            <Button variant="ghost" size="icon" onClick={toggleDarkMode}>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleDarkMode}
+              title={isDarkMode ? 'الوضع الفاتح' : 'الوضع المظلم'}
+            >
               {isDarkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </Button>
 
@@ -104,11 +106,11 @@ export default function HomePage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button size="lg" className="text-lg px-8">
-                  <BookOpen className="mr-2 h-5 w-5" />
+                  <BookOpen className="me-2 h-5 w-5" />
                   استكشف المحتوى
                 </Button>
                 <Button variant="outline" size="lg" className="text-lg px-8">
-                  <Globe className="mr-2 h-5 w-5" />
+                  <Globe className="me-2 h-5 w-5" />
                   تعرف على المشروع
                 </Button>
               </div>

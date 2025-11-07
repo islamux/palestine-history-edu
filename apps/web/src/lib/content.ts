@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { Article, TimelineEvent, EvidenceDocument, Category } from '@/types';
+import type { Article, TimelineEvent, EvidenceDocument, Category } from '@/types';
 
 const contentDirectory = path.join(process.cwd(), 'src/content');
 
@@ -39,15 +39,14 @@ export function loadArticlesFromFiles(): Article[] {
   for (const file of articleFiles) {
     if (file.endsWith('.md')) {
       const { frontMatter, content } = readMarkdownFile(`articles/${file}`);
-      const article: Article = {
+      const article: Omit<Article, 'categoryRef'> = {
         id: frontMatter.id || file.replace('.md', ''),
         title: frontMatter.title,
         slug: frontMatter.slug || file.replace('.md', ''),
-        date: frontMatter.date,
         content,
         excerpt: frontMatter.excerpt,
         category: frontMatter.category,
-        tags: frontMatter.tags || [],
+        tags: JSON.stringify(frontMatter.tags || []),
         publishedAt: new Date(frontMatter.publishedAt),
         updatedAt: new Date(frontMatter.updatedAt || frontMatter.publishedAt),
         featured: frontMatter.featured || false,
@@ -145,7 +144,7 @@ export function searchStaticContent(
     article.title.toLowerCase().includes(searchTerm) ||
     article.content.toLowerCase().includes(searchTerm) ||
     article.excerpt.toLowerCase().includes(searchTerm) ||
-    article.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+    JSON.parse(article.tags).some((tag: string) => tag.toLowerCase().includes(searchTerm))
   );
 
   const timelineEvents = (options.timeline || loadTimelineFromFiles()).filter(event =>
@@ -157,7 +156,7 @@ export function searchStaticContent(
     doc.title.toLowerCase().includes(searchTerm) ||
     doc.description.toLowerCase().includes(searchTerm) ||
     doc.content.toLowerCase().includes(searchTerm) ||
-    doc.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+    JSON.parse(doc.tags).some((tag: string) => tag.toLowerCase().includes(searchTerm))
   );
 
   return {

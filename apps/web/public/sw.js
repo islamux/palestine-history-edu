@@ -1,8 +1,6 @@
-const CACHE_NAME = 'olive-branch-v1';
+const CACHE_NAME = 'olive-branch-v2';
 const urlsToCache = [
   '/',
-  '/static/js/bundle.js',
-  '/static/css/main.css',
   '/manifest.json',
   '/icon-192.png',
   '/icon-512.png'

@@ -1,4 +1,18 @@
 import { PrismaClient } from '@olive-branch/db';
+import type {
+  Category,
+  Article,
+  TimelineEvent,
+  EvidenceDocument,
+  ArticleFilters,
+  TimelineEventFilters,
+  EvidenceDocumentFilters,
+  ArticleWithCategory,
+  TimelineEventWithCategory,
+  EvidenceDocumentWithCategory,
+  SearchResult,
+  SearchFilters
+} from '@/types';
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
@@ -9,17 +23,13 @@ export const prisma = globalForPrisma.prisma ?? new PrismaClient();
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
 
 // Database utility functions
-export async function getCategories() {
+export async function getCategories(): Promise<Category[]> {
   return await prisma.category.findMany({
     orderBy: { order: 'asc' },
   });
 }
 
-export async function getArticles(filters?: {
-  category?: string;
-  featured?: boolean;
-  limit?: number;
-}) {
+export async function getArticles(filters?: ArticleFilters): Promise<ArticleWithCategory[]> {
   return await prisma.article.findMany({
     where: {
       ...(filters?.category && { category: filters.category }),
@@ -33,7 +43,7 @@ export async function getArticles(filters?: {
   });
 }
 
-export async function getArticleBySlug(slug: string) {
+export async function getArticleBySlug(slug: string): Promise<ArticleWithCategory | null> {
   return await prisma.article.findUnique({
     where: { slug },
     include: {
@@ -42,10 +52,7 @@ export async function getArticleBySlug(slug: string) {
   });
 }
 
-export async function getTimelineEvents(filters?: {
-  category?: string;
-  limit?: number;
-}) {
+export async function getTimelineEvents(filters?: TimelineEventFilters): Promise<TimelineEventWithCategory[]> {
   return await prisma.timelineEvent.findMany({
     where: {
       ...(filters?.category && { category: filters.category }),
@@ -61,12 +68,7 @@ export async function getTimelineEvents(filters?: {
   });
 }
 
-export async function getEvidenceDocuments(filters?: {
-  category?: string;
-  documentType?: string;
-  verificationStatus?: string;
-  limit?: number;
-}) {
+export async function getEvidenceDocuments(filters?: EvidenceDocumentFilters): Promise<EvidenceDocumentWithCategory[]> {
   return await prisma.evidenceDocument.findMany({
     where: {
       ...(filters?.category && { category: filters.category }),
@@ -81,12 +83,10 @@ export async function getEvidenceDocuments(filters?: {
   });
 }
 
-export async function searchContent(query: string, filters?: {
-  category?: string;
-  limit?: number;
-}) {
-  const searchQuery = `%${query}%`;
-  
+export async function searchContent(
+  query: string,
+  filters?: SearchFilters
+): Promise<SearchResult> {
   const [articles, timelineEvents, evidenceDocuments] = await Promise.all([
     prisma.article.findMany({
       where: {

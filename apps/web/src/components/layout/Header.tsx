@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@olive-branch/ui';
 import { Button } from '@olive-branch/ui';
 import { Menu, X, Search, Moon, Sun } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useDarkMode } from '@/hooks/useDarkMode';
 
 interface NavigationItem {
   label: string;
@@ -25,14 +25,10 @@ const navigationItems: NavigationItem[] = [
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, toggleDarkMode] = useDarkMode();
   const pathname = usePathname();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-    document.documentElement.classList.toggle('dark');
-  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -70,7 +66,12 @@ export function Header() {
             <span className="sr-only">بحث</span>
           </Button>
           
-          <Button variant="ghost" size="icon" onClick={toggleDarkMode}>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleDarkMode}
+            title={isDarkMode ? 'الوضع الفاتح' : 'الوضع المظلم'}
+          >
             {isDarkMode ? (
               <Sun className="h-4 w-4" />
             ) : (
@@ -97,15 +98,10 @@ export function Header() {
       </div>
 
       {/* Mobile Navigation */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
-            className="border-t bg-background md:hidden"
-          >
+      {isMenuOpen && (
+        <div
+          className="border-t bg-background md:hidden animate-fade-in"
+        >
             <nav className="container py-4">
               <div className="flex flex-col space-y-3">
                 {navigationItems.map((item) => (
@@ -132,15 +128,14 @@ export function Header() {
                 {/* Mobile Search */}
                 <div className="pt-2 border-t">
                   <Button variant="outline" className="w-full justify-start">
-                    <Search className="mr-2 h-4 w-4" />
+                    <Search className="me-2 h-4 w-4" />
                     بحث في المحتوى
                   </Button>
                 </div>
               </div>
             </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
+        </div>
+      )}
     </header>
   );
 }

@@ -15,6 +15,19 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        'sans': ['system-ui', 'Segoe UI', 'Roboto', 'Noto Sans', 'sans-serif'],
+        'arabic': [
+          'Noto Sans Arabic',
+          'Amiri',
+          'Cairo',
+          'Tajawal',
+          'system-ui',
+          'Segoe UI',
+          'Roboto',
+          'sans-serif'
+        ],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
